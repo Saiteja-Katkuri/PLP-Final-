@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { PostService } from "src/app/Services/post.service";
 import { Post } from "src/app/model/post";
 import { UserRegService } from "src/app/Services/user-reg.service";
+import { UserProfile } from 'src/app/model/userProfile';
 
 @Component({
   selector: "app-home",
@@ -17,8 +18,11 @@ export class HomeComponent implements OnInit {
     post: ""
   };
 
+
   updatePost: Post;
   posts: Post[] = [];
+
+  loggedUserProfile : UserProfile;
   constructor(
     private router: Router,
     private postService: PostService,
@@ -31,6 +35,8 @@ export class HomeComponent implements OnInit {
     } else {
       this.router.navigate(["userlogin"]);
     }
+    this.userRegService.getProfile(this.loggedUserId).subscribe(data => {
+      this.loggedUserProfile = data;})
   }
 
   //  post it ...........................................................................
